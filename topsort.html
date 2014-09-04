@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>Topological Sorting</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+
+//Topological Sort
+
+//Defined the graph
+var G = [[1,2],[1,3],[3,4],[4,6],[4,7,],[4,8],[3,5],[5,9]], len = G.length,
+
+M = [[],[],[],[],[],[],[],[],[],[]], count = [0,0,0,0,0,0,0,0], visited = [0,0,0,0,0,0,0,0,0,0,0],
+
+list = [];
+
+var c = -1
+
+function read() {
+
+         var k = 0, i, j;
+         for(;len;len--) {
+             i = G[k][0]
+             j = G[k++][1]
+             count[i]++
+             M[i].push(j)     
+         }  
+
+         for(var i=1;i<=G.length+1;i++) {
+
+             if(visited[i] == 0) {
+
+                 DFS(i)     
+             } 
+         }
+}
+
+//Deep First Search Traversal
+function DFS(node) {
+
+         visited[node] = 1
+
+         for(var i = 0; i < count[ node ]; i++) {
+
+                 if( visited[M[ node ][ i ]] == 0 ) {
+
+                     DFS( M[node][i] )
+                 }
+         } 
+
+         list[++c] = node
+}
+
+function write() {
+
+         console.log("Output:")   
+         console.log(list)
+         console.log(list.reverse())
+}
+
+read()
+write()
+
+</script>
+</head>
+<body>
+</body>
+</html>
+
