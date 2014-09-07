@@ -20,13 +20,13 @@ struct Node *L[ MAX ] ,
 void read(const char*);
 void solve();
 void dfs(int);
-void write();
+void write(const char*);
 
 int main() {
 
-    read("topsort.in");
+    read("sortaret.in");
     solve();
-    write(); 
+    write("sortaret.out"); 
 
     return(0);
 };
@@ -81,12 +81,16 @@ void dfs(int node) {
      head = p;           
 }
 
-void write() {
+void write(const char *filename) {
 
      struct Node *c;
 
+     fout = fopen(filename, "w");
+
      for(c = head; c ; c = c->next) 
 
-             printf("%d ", c->info);
+             fprintf(fout, "%d ", c->info);
+
+     fclose( fout ); 
 }
 
