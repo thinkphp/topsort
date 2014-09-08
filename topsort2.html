@@ -66,7 +66,8 @@ var Topsort = function(){
  
              return _bubble(cells, function(a,b){
 
-                    if(a.time > b.time) return true
+                    if(a.time < b.time) return true
+
                               else 
                                         return false     
              })

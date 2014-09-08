@@ -8,20 +8,18 @@ typedef struct cell {
 
 Cell cells[30],*p;
 
-int time = 0;
 
-int output[50], ind = 0;
 
 //matrix of adiacent
 int mat[30][30], 
     visited[50], 
     n, 
-    m;
+    m, time = 0;
 
 //FILE I/O
 FILE *fin, *fout;
 
-//prototypes
+//prototypes functions
 void read(const char*);
 void solve();
 void dfs(int);
@@ -39,22 +37,27 @@ int main() {
 
     //solves the problem with this magic algorithm
     solve();
-
-    int kk;
-    for(kk=1;kk<=m;kk++) {
-        printf("%d %d || ", cells[kk].node, cells[kk].time);
-    }
      
-  
-    //p = cells;
+    p = cells;
 
-    //p = bubblesort(p);
+    p = bubblesort( p );
 
     //write the solution
-    //write("topsort2.out");
+    write("topsort3.out");
 
     //return SUCCESS to the Operating System
     return(0);
+}
+
+void initCells() {
+
+    int i;
+
+    for(i = 1; i <=m; i++) {
+
+            cells[i].node = i;
+            cells[i].time = -1;
+    }
 }
 
 //function read
@@ -79,31 +82,30 @@ void solve() {
      int i; 
  
      //loop through each node and check if visited
-     for(i = 1; i <= m; i++) {
+     for(i = 1; i <= m; i++)
 
          //if is not visited the node then you can make a depth first search
-         if(visited[i] == 0) {
+         if( !visited[ i ] ) 
 
                 dfs( i ); 
-         }
-     }   
 }
 
 void dfs(int node) {
 
      int kNode;
 
-     cells[ node ].time = time++;  
-
      visited[ node ] = 1; 
 
-     for(kNode = 1; kNode <=m; kNode++) {
- 
-         if((mat[ node ][ kNode ] == 1) && visited[ kNode ] == 0) {
+     for(kNode = 1; kNode <= m; kNode++)
 
-                dfs( kNode ); 
-         } 
-     }
+         if(mat[ node ][ kNode ] == 1)
+
+             if(!visited[ kNode ])
+
+                dfs( kNode );
+         
+
+     cells[ node ].time = time++;
 }
 
 void write(const char* filename) {
@@ -112,24 +114,18 @@ void write(const char* filename) {
 
      fout = fopen(filename, "w");
 
-     fprintf(fout,"%s\n", "One Solution:");
+     for(i = 1;i <= m; i++) {
 
-     for(i=0;i<m;i++) fprintf(fout,"%d ", output[i]);
+         printf("%d ", p[i].node);
+         fprintf(fout,"%d ", p[i].node);
+     }
 
      fclose( fout );
 }
 
-void initCells() {
-    int i;
-    for(i=1;i<=m;i++) {
-            cells[i].node = i;
-            cells[i].time = -1;
-    }
-}
-
 Cell* bubblesort(Cell *p) {
 
-    int i,swapped;
+    int i, swapped;
  
     do {
 
@@ -137,12 +133,13 @@ Cell* bubblesort(Cell *p) {
 
        for(i = 1; i <= m; i++) {
 
-        if(p[i].time > p[i+1].time) {
+        if(p[i].time < p[i+1].time) {
 
            Cell temp;
            temp = p[i];
            p[i] = p[i+1];
            p[i+1] = temp; 
+           swapped = 1;
         }         
     }
     }while(swapped);

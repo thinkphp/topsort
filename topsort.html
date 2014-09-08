@@ -40,7 +40,7 @@ function read() {
 //Deep First Search Traversal
 function DFS(node) {
 
-         visited[node] = 1
+         visited[ node ] = 1
 
          for(var i = 0; i < count[ node ]; i++) {
 
@@ -49,7 +49,7 @@ function DFS(node) {
                      DFS( M[node][i] )
                  }
          } 
-
+ 
          list[++c] = node
 }
 
