@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <malloc.h>
 
-#define MAX 50001
+#define MAX 50005
 #define FOR(a,b,c) for(a=b;a<=c;a++)
 
 struct Node {
@@ -10,9 +10,7 @@ struct Node {
        struct Node *next;
 };
 
-FILE *fin,*fout;
-
-int num_edges, num_nodes, visited[ MAX ];
+int N, M, visited[ MAX ];
 
 struct Node *L[ MAX ] , 
             *head = NULL;
@@ -28,7 +26,7 @@ int main() {
     solve();
     write("sortaret.out"); 
 
-    return(0);
+    return 0;
 };
 
 void read(const char *filename) {
@@ -36,12 +34,13 @@ void read(const char *filename) {
      int i,j;
      struct Node *c;
      
-     fin = fopen(filename,"r");
-     fscanf(fin,"%d %d", &num_edges, &num_nodes);
+     freopen(filename, "r", stdin);
 
-     for(;num_edges; num_edges--) {
+     scanf("%d %d", &N, &M);
 
-         fscanf(fin,"%d %d", &i, &j);
+     for(; M; M--) {
+
+         scanf("%d %d", &i, &j);
 
          c = (struct Node*)malloc(sizeof(struct Node)); 
          c->info = j;
@@ -54,7 +53,7 @@ void solve() {
 
      int node;
 
-     FOR(node, 1, num_nodes) {  
+     FOR(node, 1, N) {  
 
          if(!visited[ node ]) 
 
@@ -85,12 +84,10 @@ void write(const char *filename) {
 
      struct Node *c;
 
-     fout = fopen(filename, "w");
+     freopen(filename, "w", stdout);
 
      for(c = head; c ; c = c->next) 
-
-             fprintf(fout, "%d ", c->info);
-
-     fclose( fout ); 
+       
+             printf("%d ", c->info); 
 }
 
