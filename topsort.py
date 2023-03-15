@@ -1,134 +1,51 @@
-# Topological Sort
+def topsort():
 
-# my Class
-class TopSort:
+    def dfs(node):
 
-      k = -1 
-  
-      #constructor of class
-      def __init__(self):
+        explored[ node ] = True
 
-          #the first argument is a string containing the filename
-          #the second argument is another string containg a few characters describing 
-          #the way in which the file will be used
-          #in our case the mode is 'r', because the file will only be read
-          f = open('topsort.in','r')
+        for k in range( 1, nodes + 1):
 
-          a = f.readline()
-         
-          #get the number of the lines describing arches
-          n = int(a[0])
+            if explored[ k ] is False and matrix[ node ][ k ] == 1:
 
-          #get the numbers of the Nodes
-          m = int(a[2])
+                dfs( k )
+        sol.append(node)
 
-          #[0,0,0,0,0,0,0,0,0]
-          self.isVisited = [0] * (m+1)  
+    def reverse2(list):
+            i = 0
+            j = len(list)-1
+            while i < j:
+                list[i],list[j] = list[j], list[i]
+                i+=1
+                j-=1
 
-          #[0,0,0,0,0,0,0,0,0]
-          self.stack = [0] * m  
+    def reverse(list):
+            newList = list[::-1]
+            return newList
 
-          #[0,0,0,0,0,0,0,0,0]
-          self.costs = [0] * (m+1)
 
-          #Matrix = [[],[],[],[],[],[],[],[],[],[],[],[]]
-          self.Matrix = [[] for j in range(n)]
+    file = open("topsort.in", "r")
+    #grab the number of the nodes and edges
+    list = [int(i) for i in file.readline().split(" ")]
+    nodes = list[0];
+    edges = list[1];
 
-          print self.Matrix        
+    #define the matrix
+    matrix = [[0 for column in range(nodes+1)] for row in range(nodes+1)]
+    explored = [False] * (nodes+1)
+    sol = []
+    for i in range(0, edges):
+       line = file.readline().split(" ")
+       x = int(line[0])
+       y = int(line[1])
+       matrix[x][y] = 1
+       edges-=1
 
-          #read each line and construct the Matrix with Costs 
-          self.assign(f,n,m)           
+    for i in range(1, nodes+1):
+        if(explored[i] is False):
+           dfs(i)
 
-      def assign(self,f,n,m):
- 
-          for i in range(1,n+1):
-              l = f.readline()
-              i = int(l[0])
-              j = int(l[2])
+    sol = reverse(sol)
+    print(sol)
 
-              self.costs[i] += 1
-              self.Matrix[i].append(j)
-
-          f.close()
-
-      def solve(self):
-           
-          self.DFS(1)  
-
-      def solve2(self):
-           
-          self.DFS2(1)  
-
-      def DFS(self,node):
-
-          self.isVisited[ node ] = 1 
-           
-          for i in range(0, self.costs[ node ]):
-                
-              if self.isVisited[ self.Matrix[ node ][ i ] ] == 0:
-                 
-                 self.DFS( self.Matrix[ node ][ i ] )
-
-          self.k = self.k + 1
-
-          self.stack[ self.k ] = node 
-
-      def DFS2(self,node):
-
-          self.isVisited[ node ] = 1 
-
-          self.k = self.k + 1
-
-          self.stack[ self.k ] = node 
-           
-          for i in range(0, self.costs[ node ]):
-                
-              if self.isVisited[ self.Matrix[ node ][ i ] ] == 0:
-                 
-                 self.DFS2( self.Matrix[ node ][ i ] )
-
-      def write(self):
-
-          #reverse the solution
-          print self.reverse(self.stack)
-
-          #returns a file object and is almost commonly used with two arguments
-          #first argument is a string containing the filename
-          #the second argument is another string containing a few characters describing the way in which will be used the file 
-          f = open('topsort.out','w')
-
-          #writes the contents of string to the file 
-          print f.write(str(self.stack))
-
-          #when you're done with a file, call f.close() to close it and free up any system resources taken up
-          #by the open file.
-          f.close()  
-
-      def write2(self):
-
-          print self.stack
-
-          f = open('topsort.out','w')
-
-          print f.write(str(self.stack))
-
-          f.close()  
-             
-      def reverse(self,arr):
-
-          i = 0
-          j = len(arr)-1
- 
-          while i<j:
-
-             temp = arr[i]    
-             arr[i] = arr[j]   
-             arr[j] = temp
-             i = i + 1
-             j = j - 1 
-
-          return arr 
-
-ob = TopSort()
-ob.solve2()
-ob.write2()
+topsort()
