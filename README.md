@@ -13,8 +13,8 @@
 
 #### Problem Set
 
-https://infoarena.ro/problema/sortaret
-https://leetcode.com/problems/course-schedule/description/
+* https://infoarena.ro/problema/sortaret
+* https://leetcode.com/problems/course-schedule/description/
 
 ####  References
 
